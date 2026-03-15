@@ -1,45 +1,102 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { signIn, getUser, getProfile } from "@/lib/store";
 
 export default function SignIn() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSignIn = () => {
+    if (!name.trim() || !email.trim()) {
+      setError("Please enter your name and email.");
+      return;
+    }
+    signIn(name.trim(), email.trim());
+    const profile = getProfile();
+    if (profile?.onboardingComplete) {
+      window.location.href = "/futureself/dashboard";
+    } else {
+      window.location.href = "/futureself/onboarding";
+    }
+  };
+
+  // Check if already signed in
+  if (typeof window !== 'undefined') {
+    const user = getUser();
+    if (user) {
+      const profile = getProfile();
+      if (profile?.onboardingComplete) {
+        window.location.href = "/futureself/dashboard";
+      } else {
+        window.location.href = "/futureself/onboarding";
+      }
+      return null;
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/3 pointer-events-none" />
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <Card className="w-full max-w-md bg-card/80 backdrop-blur-xl border-border">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-md">
+        <Card className="bg-card/80 backdrop-blur-xl border-border">
           <CardContent className="p-8">
             <div className="flex items-center justify-center mb-8">
               <Link href="/" className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <span className="font-semibold text-xl">FutureSelf</span>
+                <span className="font-display text-2xl tracking-tight">FutureSelf</span>
               </Link>
             </div>
-            <h1 className="text-2xl font-bold text-center mb-2">Welcome back</h1>
-            <p className="text-muted-foreground text-center mb-8">Sign in to continue your journey</p>
+            <h1 className="font-display text-3xl text-center mb-2">Meet your future</h1>
+            <p className="text-muted-foreground text-center mb-8 text-sm">Enter your details to begin the journey</p>
+            
+            <div className="space-y-4 mb-6">
+              <div>
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-1.5"
+                  onKeyDown={(e) => e.key === 'Enter' && handleSignIn()}
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1.5"
+                  onKeyDown={(e) => e.key === 'Enter' && handleSignIn()}
+                />
+              </div>
+            </div>
+
+            {error && <p className="text-sm text-destructive mb-4">{error}</p>}
+
             <Button
-              className="w-full h-12 text-base bg-white text-black hover:bg-gray-100 border border-gray-200"
-              onClick={() => {
-                // Placeholder — would call signIn("google")
-                window.location.href = "/onboarding";
-              }}
+              className="w-full h-12 text-base bg-primary text-primary-foreground hover:bg-primary/90"
+              onClick={handleSignIn}
             >
-              <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-              </svg>
-              Continue with Google
+              Get Started
             </Button>
+
             <p className="text-xs text-muted-foreground text-center mt-6">
-              By signing in, you agree to our Terms of Service and Privacy Policy.
+              Your data stays in your browser. Nothing is sent to any server.
             </p>
           </CardContent>
         </Card>
