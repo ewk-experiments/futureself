@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FutureSelf
+
+> Talk to a photorealistic AI-generated future version of yourself before making major life decisions.
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind](https://img.shields.io/badge/Tailwind-4-38bdf8)
+
+## Overview
+
+FutureSelf uses advanced AI to generate a photorealistic, aged version of you — complete with your voice, your context, and the wisdom of decades lived. Have the conversation before you commit.
+
+## Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4 + shadcn/ui
+- **Animations:** Framer Motion
+- **Auth:** NextAuth.js (Google OAuth placeholder)
+
+## Pages
+
+| Route | Description |
+|---|---|
+| `/` | Landing page with hero, features, testimonials, CTA |
+| `/auth/signin` | Google OAuth sign-in |
+| `/onboarding` | Multi-step wizard (photos, life context, voice) |
+| `/dashboard` | Conversation history, stats, future self card |
+| `/conversation/[id]` | Chat interface with your future self |
+| `/explorer` | Multi-path branching life scenario visualizer |
+| `/pricing` | Free / Pro / Lifetime comparison |
+| `/settings` | Profile, subscription, preferences, data management |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create `.env.local` for auth (optional — app works without it):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-here
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
 
-## Learn More
+## Design
 
-To learn more about Next.js, take a look at the following resources:
+- Dark mode by default with warm amber/gold accents
+- Cinematic, slightly mysterious aesthetic
+- Mobile-responsive
+- Subtle Framer Motion animations throughout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
