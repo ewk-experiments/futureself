@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Play, Sparkles, Clock, GitBranch, Shield, Star, ChevronRight, Menu, X } from "lucide-react";
+import { ArrowRight, Play, Sparkles, Clock, GitBranch, Shield, ChevronRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,13 +16,6 @@ const fadeUp = {
 const stagger = {
   visible: { transition: { staggerChildren: 0.1 } },
 };
-
-const testimonials = [
-  { name: "Sarah Chen", role: "Startup Founder", text: "I was about to take a $2M funding deal. FutureSelf showed me the path where I bootstrapped instead. Best decision of my life.", avatar: "SC" },
-  { name: "Marcus Rivera", role: "Software Engineer", text: "Talking to my 60-year-old self about whether to move abroad was surreal. The conversation felt genuinely real.", avatar: "MR" },
-  { name: "Aisha Patel", role: "Medical Student", text: "I was torn between specialties. Seeing how each path unfolds over 20 years made the choice clear.", avatar: "AP" },
-  { name: "James Okonkwo", role: "Creative Director", text: "The multi-path explorer is addictive. I've mapped out 5 different life scenarios. It's like a cheat code for decisions.", avatar: "JO" },
-];
 
 const features = [
   { icon: Sparkles, title: "Photorealistic Aging", desc: "Advanced AI generates your actual future appearance based on your photos, genetics, and lifestyle choices." },
@@ -48,7 +41,6 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</Link>
             <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-            <Link href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Testimonials</Link>
           </div>
           <div className="hidden md:flex items-center gap-3">
             <Link href="/auth/signin">
@@ -165,36 +157,11 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="px-6 pb-24">
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-6xl mx-auto">
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Life-changing conversations.</h2>
-            <p className="text-muted-foreground text-lg">What our users say after talking to their future selves.</p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {testimonials.map((t, i) => (
-              <motion.div key={i} variants={fadeUp}>
-                <Card className="bg-card/50 border-border h-full">
-                  <CardContent className="p-8">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, j) => (
-                        <Star key={j} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
-                    </div>
-                    <p className="text-foreground/90 leading-relaxed mb-6">&ldquo;{t.text}&rdquo;</p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-sm font-medium text-primary">{t.avatar}</div>
-                      <div>
-                        <p className="font-medium text-sm">{t.name}</p>
-                        <p className="text-xs text-muted-foreground">{t.role}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+      {/* Social proof */}
+      <section className="px-6 pb-24">
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Built for people making big decisions.</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Career changes. Relationships. Moves across the world. The moments that define your life deserve more than a gut feeling.</p>
         </motion.div>
       </section>
 
